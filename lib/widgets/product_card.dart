@@ -9,14 +9,16 @@ class ProductCard extends StatelessWidget {
   final Product product;
   final double widthFactor;
   final double imgHeight;
-  final bool additionalButton;
+  //final bool additionalButton;
+  final bool isWishlist;
 
   const ProductCard({
     Key? key,
     required this.product,
     this.widthFactor = 3.5,
-    this.additionalButton = false,
+    //this.additionalButton = false,
     this.imgHeight = 150,
+    this.isWishlist = false,
   }) : super(key: key);
 
   @override
@@ -88,26 +90,28 @@ class ProductCard extends StatelessWidget {
               ],
             ),
             Positioned(
-              top: -5,
+              top: isWishlist ? null : -5,
               right: 0,
+              bottom: isWishlist ? -5 : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.add_circle_outlined,
-                          color: Colors.black),
-                      onPressed: () {
-                        final snackBar = SnackBar(
-                          content: Text('Added to your cart!'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                    
+                children: [
+                  IconButton(
+                    iconSize: isWishlist ? 30 : 24,
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.add_circle_outlined, color: Colors.black),
+                    onPressed: () {
+                      final snackBar = SnackBar(
+                        content: Text('Added to your cart!'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
                   ),
-                  additionalButton
+                  isWishlist
                       ? IconButton(
                           padding: EdgeInsets.zero,
-                          icon: Icon(Icons.delete, color: Colors.white),
+                          icon: Icon(Icons.delete, color: Colors.black),
+                          iconSize: 30,
                           onPressed: () {
                             final snackBar = SnackBar(
                               content: Text('Removed from your Wishlist!'),

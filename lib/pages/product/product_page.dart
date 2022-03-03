@@ -2,8 +2,10 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_bloc_firebase/widgets/widgets.dart';
 
+import '../../blocs/blocs.dart';
 import '../../config/theme.dart';
 import '../../models/models.dart';
 
@@ -22,6 +24,8 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget _btnFav = Icon(Icons.favorite_border, color: Colors.white);
+
     return Scaffold(
       appBar: CustomAppBar(
         title: product.name,
@@ -41,12 +45,20 @@ class ProductPage extends StatelessWidget {
                 ),
                 onPressed: () {},
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                ),
-                onPressed: () {},
+              BlocBuilder<WishlistBloc, WishlistState>(
+                builder: (context, state) {
+                  return IconButton(
+                    icon: _btnFav,
+                    onPressed: () {
+                      context.read<WishlistBloc>().add(AddToWishlist(product));
+                      _btnFav = Icon(Icons.favorite, color: Colors.red);
+                      final snackBar = SnackBar(
+                        content: Text('Add to Wishlist!'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                  );
+                },
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
