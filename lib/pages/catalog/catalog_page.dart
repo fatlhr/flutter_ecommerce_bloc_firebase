@@ -16,12 +16,13 @@ class CatalogPage extends StatelessWidget {
   }
 
   final Category category;
+  final double widthFactor;
 
-  const CatalogPage({Key? key, required this.category}) : super(key: key);
+  const CatalogPage({Key? key, required this.category, this.widthFactor = 2.5}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
+    final double widthValue = MediaQuery.of(context).size.width / widthFactor;
     // list of products by category
     final List<Product> categoryProducts = Product.products
         .where((product) => product.category == category.name)
@@ -39,9 +40,13 @@ class CatalogPage extends StatelessWidget {
           childAspectRatio: 1,
         ),
         itemBuilder: (BuildContext context, int index) => Center(
-          child: ProductCard(
-            widthFactor: 2.2,
-            product: categoryProducts[index],
+          child: SizedBox(
+            height: widthValue + 80,
+            child: ProductCard(
+              imgHeight : 150,
+              widthFactor: 2.5,
+              product: categoryProducts[index],
+            ),
           ),
         ),
         itemCount: categoryProducts.length,

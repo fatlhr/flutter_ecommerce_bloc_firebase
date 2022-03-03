@@ -1,14 +1,9 @@
 // ignore_for_file: avoid_print, prefer_const_constructors, no_duplicate_case_values
 
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_bloc_firebase/models/category_model.dart';
 
-import '../pages/cart/cart_page.dart';
-import '../pages/catalog/catalog_page.dart';
-import '../pages/home/home_page.dart';
-import '../pages/product/product_page.dart';
-import '../pages/user/user_page.dart';
-import '../pages/wishlist/wishlist_page.dart';
+import '../models/models.dart';
+import '../pages/pages.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -26,7 +21,7 @@ class AppRouter {
       case CatalogPage.routeName:
         return CatalogPage.route(category: settings.arguments as Category);
       case ProductPage.routeName:
-        return ProductPage.route();
+        return ProductPage.route(product: settings.arguments as Product);
       case WishlistPage.routeName:
         return WishlistPage.route();
       default:

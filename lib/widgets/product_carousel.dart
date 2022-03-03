@@ -16,7 +16,8 @@ class ProductCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     final double widthValue = MediaQuery.of(context).size.width / widthFactor;
     return SizedBox(
-      height: widthValue,
+      //height: widthValue,
+      height: widthValue + 80,
       child: ListView.builder(
         itemCount: products.length,
         scrollDirection: Axis.horizontal,

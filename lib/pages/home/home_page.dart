@@ -28,20 +28,19 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  aspectRatio: 1.5,
-                  viewportFraction: 0.9,
-                  enlargeCenterPage: true,
-                  enlargeStrategy: CenterPageEnlargeStrategy.height,
-                  initialPage: 1,
-                ),
-                items: Category.categories
-                    .map((e) => HeroCarouselCard(category: e))
-                    .toList(),
+            CarouselSlider(
+              options: CarouselOptions(
+                aspectRatio: 1.5,
+                viewportFraction: 0.9,
+                enlargeCenterPage: true,
+                enlargeStrategy: CenterPageEnlargeStrategy.height,
+                initialPage: 1,
               ),
+              items: Category.categories
+                  .map((e) => HeroCarouselCard(category: e))
+                  .toList(),
             ),
+            
             SectionTitle(title: 'RECOMMENDED'),
             ProductCarousel(
               products: Product.products
