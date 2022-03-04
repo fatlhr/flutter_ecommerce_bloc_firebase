@@ -67,10 +67,6 @@ class ProductPage extends StatelessWidget {
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
                   ),
                   child: Text(
                     'ADD TO CART',
@@ -84,6 +80,7 @@ class ProductPage extends StatelessWidget {
           ),
         ),
       ),
+      
       body: ListView(
         children: [
           CarouselSlider(
@@ -133,14 +130,18 @@ class ProductPage extends StatelessWidget {
                             product.name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: textTheme().headline4!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal),
                           ),
                         ),
                         Text(
                           '\$${product.price}',
-                          style: textTheme()
+                          style: Theme.of(context)
+                              .textTheme
                               .headline3!
                               .copyWith(color: Colors.white),
                         ),
@@ -160,7 +161,8 @@ class ProductPage extends StatelessWidget {
                 initiallyExpanded: true,
                 title: Text(
                   'Product Information',
-                  style: textTheme()
+                  style: Theme.of(context)
+                      .textTheme
                       .headline2!
                       .copyWith(fontWeight: FontWeight.normal),
                 ),
@@ -168,7 +170,7 @@ class ProductPage extends StatelessWidget {
                   ListTile(
                     title: Text(
                       'Lorem ipsum dolor sit amet, maiorum delicatissimi quo et, homero adversarium instructior vim an, ex quo prima voluptua maluisset. Quod aliquip id duo, eum noster possim an. Suavitate abhorreant ex sit. Has cu aperiam dissentiet. No est purto inani principes, veritus ocurreret te mel, accusam nominavi mel cu. Nam ne sint soleat, mei id decore invenire, novum primis principes ne sit.',
-                      style: textTheme().bodyText1,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                 ],
@@ -177,7 +179,7 @@ class ProductPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: SizedBox(height: 20, child: Divider()),
+            child: SizedBox(height: 10, child: Divider()),
           ),
           Theme(
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -187,7 +189,8 @@ class ProductPage extends StatelessWidget {
                 initiallyExpanded: true,
                 title: Text(
                   'Delivery Information',
-                  style: textTheme()
+                  style: Theme.of(context)
+                      .textTheme
                       .headline2!
                       .copyWith(fontWeight: FontWeight.normal),
                 ),
@@ -195,7 +198,7 @@ class ProductPage extends StatelessWidget {
                   ListTile(
                     title: Text(
                       'Lorem ipsum dolor sit amet, maiorum delicatissimi quo et, homero adversarium instructior vim an, ex quo prima voluptua maluisset. Quod aliquip id duo, eum noster possim an. Suavitate abhorreant ex sit. Has cu aperiam dissentiet. No est purto inani principes, veritus ocurreret te mel, accusam nominavi mel cu. Nam ne sint soleat, mei id decore invenire, novum primis principes ne sit.',
-                      style: textTheme().bodyText1,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                 ],
