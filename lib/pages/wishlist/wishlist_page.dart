@@ -35,22 +35,13 @@ class WishlistPage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is WishlistLoaded) {
-            return GridView.builder(
+            return ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                childAspectRatio: 2.2,
-              ),
               itemCount: state.wishlist.products.length,
               itemBuilder: (BuildContext context, int index) => Center(
-                child: SizedBox(
-                  height: widthValue + 80,
-                  child: ProductCard(
-                    imgHeight: 135,
-                    widthFactor: 1.1,
-                    isWishlist: true,
-                    product: state.wishlist.products[index],
-                  ),
+                child: WishlistCard(
+                  imgHeight: 140,
+                  product: state.wishlist.products[index],
                 ),
               ),
             );

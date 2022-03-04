@@ -80,7 +80,6 @@ class ProductPage extends StatelessWidget {
           ),
         ),
       ),
-      
       body: ListView(
         children: [
           CarouselSlider(
