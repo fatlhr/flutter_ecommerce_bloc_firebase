@@ -60,21 +60,32 @@ class ProductPage extends StatelessWidget {
                   );
                 },
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                width: MediaQuery.of(context).size.width / 2.5,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                  ),
-                  child: Text(
-                    'ADD TO CART',
-                    style: textTheme().headline4!.copyWith(
-                          color: Colors.black,
-                        ),
-                  ),
-                ),
+              BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    width: MediaQuery.of(context).size.width / 2.5,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<CartBloc>().add(AddToCart(product));
+                        Navigator.pushNamed(context, '/cart');
+                        final snackBar = SnackBar(
+                          content: Text('Successfully Add to Cart'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                      ),
+                      child: Text(
+                        'ADD TO CART',
+                        style: textTheme().headline4!.copyWith(
+                              color: Colors.black,
+                            ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),

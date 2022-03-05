@@ -39,8 +39,9 @@ class WishlistPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               itemCount: state.wishlist.products.length,
               itemBuilder: (BuildContext context, int index) => Center(
-                child: WishlistCard(
-                  imgHeight: 140,
+                child: CartProductCard(
+                  //imgHeight: 140,
+                  isWishlist: true,
                   product: state.wishlist.products[index],
                 ),
               ),

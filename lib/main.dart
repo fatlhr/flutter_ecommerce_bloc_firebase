@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => WishlistBloc()..add(StartWishlist()),
         ),
+        BlocProvider(
+          create: (context) => CartBloc()..add(StartCart()),
+        ),
       ],
       child: MaterialApp(
         title: 'Ecommerce Bloc Demo',

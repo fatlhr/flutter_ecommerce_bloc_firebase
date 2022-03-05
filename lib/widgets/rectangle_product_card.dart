@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/blocs.dart';
 import '../config/theme.dart';
 import '../models/models.dart';
 
@@ -96,15 +98,31 @@ class ProductCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    iconSize: isWishlist ? 30 : 24,
-                    padding: EdgeInsets.zero,
-                    icon: Icon(Icons.add_circle_outlined, color: Colors.black),
-                    onPressed: () {
-                      final snackBar = SnackBar(
-                        content: Text('Added to your cart!'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  BlocBuilder<CartBloc, CartState>(
+                    builder: (context, state) {
+                      if (state is CartLoaded) {
+                        return IconButton(
+                          iconSize: isWishlist ? 30 : 24,
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.add_circle_outlined,
+                              color: Colors.black),
+                          onPressed: () {
+                            context.read<CartBloc>().add(
+                                  AddToCart(product),
+                                );
+                            final snackBar = SnackBar(
+                              content: Text('Added to your cart!'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          },
+                        );
+                      } else if (state is CartLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Center(child: Text("Something wrong"));
                     },
                   ),
                   isWishlist
