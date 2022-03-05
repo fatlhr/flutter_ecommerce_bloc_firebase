@@ -18,7 +18,6 @@ class ProductCard extends StatelessWidget {
     Key? key,
     required this.product,
     this.widthFactor = 3.5,
-    //this.additionalButton = false,
     this.imgHeight = 150,
     this.isWishlist = false,
   }) : super(key: key);
@@ -58,15 +57,30 @@ class ProductCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: widthValue,
-                  height: imgHeight,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(product.imageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoaded) {
+                      return Container(
+                        width: widthValue,
+                        height: imgHeight,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(product.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    } else if (state is CartLoading) {
+                      return SizedBox(
+                        height: imgHeight,
+                        width: imgHeight,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return Center(child: Text("Something wrong"));
+                  },
                 ),
                 SizedBox(height: 8),
                 Expanded(
@@ -101,138 +115,63 @@ class ProductCard extends StatelessWidget {
                   BlocBuilder<CartBloc, CartState>(
                     builder: (context, state) {
                       if (state is CartLoaded) {
-                        return IconButton(
-                          iconSize: isWishlist ? 30 : 24,
-                          padding: EdgeInsets.zero,
-                          icon: Icon(Icons.add_circle_outlined,
-                              color: Colors.black),
-                          onPressed: () {
-                            context.read<CartBloc>().add(
-                                  AddToCart(product),
-                                );
+                        return InkWell(
+                          onTap: () {
+                            context.read<CartBloc>().add(AddToCart(product));
                             final snackBar = SnackBar(
                               content: Text('Added to your cart!'),
+                              duration: Duration(seconds: 2),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                            child: Card(
+                              elevation: 10,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              child: SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
                         );
-                      } else if (state is CartLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        // IconButton(
+                        //   iconSize: isWishlist ? 30 : 24,
+                        //   padding: EdgeInsets.zero,
+                        //   icon: Icon(
+                        //     Icons.add_circle_outline,
+                        //     color: Colors.white,
+                        //   ),
+                        //   onPressed: () {
+                        //     context.read<CartBloc>().add(
+                        //           AddToCart(product),
+                        //         );
+                        //     final snackBar = SnackBar(
+                        //       content: Text('Added to your cart!'),
+                        //     );
+                        //     ScaffoldMessenger.of(context)
+                        //         .showSnackBar(snackBar);
+                        //   },
+                        // );
                       }
-                      return Center(child: Text("Something wrong"));
+                      return SizedBox();
                     },
                   ),
-                  isWishlist
-                      ? IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: Icon(Icons.delete, color: Colors.black),
-                          iconSize: 30,
-                          onPressed: () {
-                            final snackBar = SnackBar(
-                              content: Text('Removed from your Wishlist!'),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          },
-                        )
-                      : SizedBox(),
                 ],
               ),
             ),
           ],
         ),
       ),
-
-      // Stack(
-      //   children: [
-      //     SizedBox(
-      //       width: widthValue,
-      //       height: widthValue,
-      //       child: Image.network(
-      //         product.imageUrl,
-      //         fit: BoxFit.cover,
-      //       ),
-      //     ),
-      //     Positioned(
-      //       bottom: 5,
-      //       left: 5,
-      //       child: Container(
-      //         width: widthValue - 10,
-      //         height: 75,
-      //         decoration: BoxDecoration(color: Colors.black.withAlpha(50)),
-      //       ),
-      //     ),
-      //     Positioned(
-      //       bottom: 0,
-      //       left: 0,
-      //       child: Container(
-      //         width: widthValue - 15,
-      //         height: 70,
-      //         alignment: Alignment.bottomLeft,
-      //         decoration: BoxDecoration(color: Colors.black),
-      //         child: Padding(
-      //           padding: const EdgeInsets.all(8.0),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //             children: [
-      //               Column(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: [
-      //                   Text(
-      //                     product.name,
-      //                     style: textTheme()
-      //                         .headline6!
-      //                         .copyWith(color: Colors.white),
-      //                     maxLines: 2,
-      //                   ),
-      //                   Text(
-      //                     'Rp. ${product.price}',
-      //                     style: textTheme()
-      //                         .headline4!
-      //                         .copyWith(color: Colors.white),
-      //                   ),
-      //                 ],
-      //               ),
-      //               Row(
-      //                 mainAxisAlignment: MainAxisAlignment.end,
-      //                 children: [
-      //                   IconButton(
-      //                     icon: Icon(Icons.add_circle, color: Colors.white),
-      //                     onPressed: () {
-      //                       final snackBar = SnackBar(
-      //                         content: Text('Added to your cart!'),
-      //                       );
-      //                       ScaffoldMessenger.of(context)
-      //                           .showSnackBar(snackBar);
-      //                     },
-      //                   ),
-      //                   additionalButton
-      //                       ? IconButton(
-      //                           padding: EdgeInsets.zero,
-      //                           icon: Icon(Icons.delete, color: Colors.white),
-      //                           onPressed: () {
-      //                             final snackBar = SnackBar(
-      //                               content:
-      //                                   Text('Removed from your Wishlist!'),
-      //                             );
-      //                             ScaffoldMessenger.of(context)
-      //                                 .showSnackBar(snackBar);
-      //                           },
-      //                         )
-      //                       : SizedBox(),
-      //                 ],
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

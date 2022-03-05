@@ -14,6 +14,8 @@ class AppRouter {
         return HomePage.route();
       case HomePage.routeName:
         return HomePage.route();
+        case SplashPage.routeName:
+        return SplashPage.route();
       case CartPage.routeName:
         return CartPage.route();
       case UserPage.routeName:

@@ -5,7 +5,7 @@ import 'package:flutter_ecommerce_bloc_firebase/config/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/blocs.dart';
 import 'config/theme.dart';
-import 'pages/home/home_page.dart';
+import 'pages/pages.dart';
 
 void main() async {
   runApp(MyApp());
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         title: 'Ecommerce Bloc Demo',
         theme: theme(),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: HomePage.routeName,
+        initialRoute: SplashPage.routeName,
         debugShowCheckedModeBanner: false,
       ),
     );
