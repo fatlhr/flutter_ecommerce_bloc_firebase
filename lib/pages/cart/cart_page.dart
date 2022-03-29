@@ -37,7 +37,7 @@ class CartPage extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                width: MediaQuery.of(context).size.width / 2.5,
+                width: MediaQuery.of(context).size.width / 2.2,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/');
@@ -47,7 +47,7 @@ class CartPage extends StatelessWidget {
                   ),
                   child: Text(
                     'LETS CHECKOUT!',
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
                           color: Colors.black,
                         ),
                   ),
@@ -113,10 +113,20 @@ class CartPage extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: ListView.builder(
-                      itemCount: state.cart.products.length,
+                      itemCount: state.cart
+                          .productQuantity(state.cart.products)
+                          .keys
+                          .length,
                       itemBuilder: (BuildContext context, int index) {
-                        return CartProductCard(
-                          product: state.cart.products[index],
+                        return RectangularProductCard(
+                          product: state.cart
+                              .productQuantity(state.cart.products)
+                              .keys
+                              .elementAt(index),
+                          quantity: state.cart
+                              .productQuantity(state.cart.products)
+                              .values
+                              .elementAt(index),
                         );
                       },
                     ),

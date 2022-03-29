@@ -79,7 +79,7 @@ class ProductPage extends StatelessWidget {
                       ),
                       child: Text(
                         'ADD TO CART',
-                        style: textTheme().headline4!.copyWith(
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
                               color: Colors.black,
                             ),
                       ),

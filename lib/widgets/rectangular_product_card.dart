@@ -6,11 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/blocs.dart';
 import '../models/models.dart';
 
-class CartProductCard extends StatelessWidget {
+class RectangularProductCard extends StatelessWidget {
   final Product product;
+  final int quantity;
   final bool isWishlist;
-  const CartProductCard(
-      {Key? key, required this.product, this.isWishlist = false})
+  const RectangularProductCard(
+      {Key? key, required this.product, this.isWishlist = false, required this.quantity})
       : super(key: key);
 
   @override
@@ -150,7 +151,7 @@ class CartProductCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '1',
+                                '$quantity',
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                               SizedBox(

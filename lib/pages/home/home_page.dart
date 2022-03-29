@@ -2,8 +2,8 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_bloc_firebase/models/models.dart';
-import '../../models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/blocs.dart';
 import '../../widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,41 +21,71 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: const CustomAppBar(
-        
         title: "Ecommerce",
       ),
       bottomNavigationBar: CustomNavBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                aspectRatio: 1.5,
-                viewportFraction: 0.9,
-                enlargeCenterPage: true,
-                enlargeStrategy: CenterPageEnlargeStrategy.height,
-                initialPage: 1,
-              ),
-              items: Category.categories
-                  .map((e) => HeroCarouselCard(category: e))
-                  .toList(),
+            BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is CategoryLoaded) {
+                  return CarouselSlider(
+                    options: CarouselOptions(
+                      aspectRatio: 1.5,
+                      viewportFraction: 0.9,
+                      enlargeCenterPage: true,
+                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      initialPage: 1,
+                    ),
+                    items: state.categories
+                        .map((e) => HeroCarouselCard(category: e))
+                        .toList(),
+                  );
+                } else if (state is CategoryLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return Center(
+                  child: Text('Something went wrong...'),
+                );
+              },
             ),
-            
             SectionTitle(title: 'RECOMMENDED'),
-            ProductCarousel(
-              products: Product.products
-                  .where((product) => product.isRecommended)
-                  .toList(),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoaded) {
+                  return ProductCarousel(
+                    products: state.products
+                        .where((product) => product.isRecommended)
+                        .toList(),
+                  );
+                } else if (state is ProductLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return Center(
+                  child: Text('Something went wrong...'),
+                );
+              },
             ),
             SizedBox(height: 10),
             SectionTitle(title: 'POPULAR'),
-            ProductCarousel(
-              products: Product.products
-                  .where((product) => product.isPopular)
-                  .toList(),
-            )
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoaded) {
+                  return ProductCarousel(
+                    products: state.products
+                        .where((product) => product.isPopular)
+                        .toList(),
+                  );
+                } else if (state is ProductLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return Center(
+                  child: Text('Something went wrong...'),
+                );
+              },
+            ),
           ],
         ),
       ),

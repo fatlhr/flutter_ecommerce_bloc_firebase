@@ -42,7 +42,7 @@ class CatalogPage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) => Center(
           child: SizedBox(
             height: widthValue + 80,
-            child: ProductCard(
+            child: RectangleCard(
               imgHeight : 150,
               widthFactor: 2.5,
               product: categoryProducts[index],

@@ -26,12 +26,16 @@ class ProductCarousel extends StatelessWidget {
           horizontal: 20,
           vertical: 10,
         ),
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: ProductCard(
-            product: products[index],
+        itemBuilder: (context, index) => 
+          Padding(
+            padding: const EdgeInsets.only(
+            right: 10,
           ),
+            child: RectangleCard(
+              product: products[index],
+            
         ),
+          ),
       ),
     );
   }

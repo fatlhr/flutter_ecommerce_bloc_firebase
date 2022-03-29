@@ -7,17 +7,16 @@ import '../blocs/blocs.dart';
 import '../config/theme.dart';
 import '../models/models.dart';
 
-class ProductCard extends StatelessWidget {
+class RectangleCard extends StatelessWidget {
   final Product product;
   final double widthFactor;
   final double imgHeight;
-  //final bool additionalButton;
   final bool isWishlist;
 
-  const ProductCard({
+  const RectangleCard({
     Key? key,
     required this.product,
-    this.widthFactor = 3.5,
+    this.widthFactor = 2.8,
     this.imgHeight = 150,
     this.isWishlist = false,
   }) : super(key: key);
@@ -34,8 +33,9 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Container(
-        height: widthValue + 50,
-        padding: EdgeInsets.all(16),
+        //height: widthValue + 50,
+        width: widthValue,
+        padding: EdgeInsets.all(2),
         margin: const EdgeInsets.only(bottom: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -62,12 +62,13 @@ class ProductCard extends StatelessWidget {
                     if (state is CartLoaded) {
                       return Container(
                         width: widthValue,
-                        height: imgHeight,
+                        height: widthValue,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(product.imageUrl),
                             fit: BoxFit.cover,
                           ),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       );
                     } else if (state is CartLoading) {
@@ -88,21 +89,28 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        product.name,
-                        style: textTheme().headline4!.copyWith(
-                              fontWeight: FontWeight.normal,
-                            ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Text(
+                          product.name,
+                          style: textTheme().headline6!.copyWith(
+                                fontWeight: FontWeight.normal,
+                              ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      Text(
-                        "\$ ${product.price}",
-                        style: textTheme().headline3!,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Text(
+                          "\$ ${product.price}",
+                          style: textTheme().headline5!,
+                        ),
                       ),
                     ],
                   ),
-                )
+                ),
+                SizedBox(height: 8),
               ],
             ),
             Positioned(
@@ -144,24 +152,6 @@ class ProductCard extends StatelessWidget {
                             ),
                           ),
                         );
-                        // IconButton(
-                        //   iconSize: isWishlist ? 30 : 24,
-                        //   padding: EdgeInsets.zero,
-                        //   icon: Icon(
-                        //     Icons.add_circle_outline,
-                        //     color: Colors.white,
-                        //   ),
-                        //   onPressed: () {
-                        //     context.read<CartBloc>().add(
-                        //           AddToCart(product),
-                        //         );
-                        //     final snackBar = SnackBar(
-                        //       content: Text('Added to your cart!'),
-                        //     );
-                        //     ScaffoldMessenger.of(context)
-                        //         .showSnackBar(snackBar);
-                        //   },
-                        // );
                       }
                       return SizedBox();
                     },
